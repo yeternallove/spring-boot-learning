@@ -11,6 +11,8 @@
 
     <modules>
         <module>spring-boot-demo-ureport2</module>
+        <module>spring-boot-demo-activti</module>
+        <module>spring-boot-demo-websocket</module>
     </modules>
 
     <properties>
