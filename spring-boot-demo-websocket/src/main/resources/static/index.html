@@ -1,68 +1,53 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>My WebSocket</title>
+    <title>Hello WebSocket</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/js/app.js"></script>
 </head>
-
 <body>
-Welcome<br/>
-<input id="text" type="text"/>
-<button onclick="send()">Send</button>
-<button onclick="closeWebSocket()">Close</button>
-<div id="message">
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+    enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+<div id="main-content" class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="connect">WebSocket connection:</label>
+                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
+                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="name">What is your name?</label>
+                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
+                </div>
+                <button id="send" class="btn btn-default" type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table id="conversation" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Greetings</th>
+                </tr>
+                </thead>
+                <tbody id="greetings">
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
-
-<script type="text/javascript">
-    var websocket = null;
-
-    //判断当前浏览器是否支持WebSocket
-    if ('WebSocket' in window) {
-        websocket = new WebSocket("ws://localhost:8080/websocket");
-        alert('support websocket')
-    } else {
-        alert('Not support websocket')
-    }
-
-    //连接发生错误的回调方法
-    websocket.onerror = function () {
-        setMessageInnerHTML("error");
-    };
-
-    //连接成功建立的回调方法
-    websocket.onopen = function (event) {
-        setMessageInnerHTML("open");
-    };
-
-    //接收到消息的回调方法
-    websocket.onmessage = function (event) {
-        setMessageInnerHTML(event.data);
-    };
-
-    //连接关闭的回调方法
-    websocket.onclose = function () {
-        setMessageInnerHTML("close");
-    };
-
-    //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-    window.onbeforeunload = function () {
-        websocket.close();
-    };
-
-    //将消息显示在网页上
-    function setMessageInnerHTML(innerHTML) {
-        document.getElementById('message').innerHTML += innerHTML + '<br/>';
-    }
-
-    //关闭连接
-    function closeWebSocket() {
-        websocket.close();
-    }
-
-    //发送消息
-    function send() {
-        var message = document.getElementById('text').value;
-        websocket.send(message);
-    }
-</script>
 </html>
