@@ -22,7 +22,7 @@
     <java.version>1.8</java.version>
     <spring-cloud.version>Finchley.SR1</spring-cloud.version>
     <hutool.version>4.2.1</hutool.version>
-    <guava.version>26.0-jre</guava.version>
+    <guava.version>29.0-jre</guava.version>
     <commons-lang3.version>3.8.1</commons-lang3.version>
     <ureport2.version>2.2.9</ureport2.version>
     <jcraft.version>0.1.54</jcraft.version>
